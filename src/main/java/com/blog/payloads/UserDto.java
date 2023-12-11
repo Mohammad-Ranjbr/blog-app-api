@@ -1,5 +1,6 @@
 package com.blog.payloads;
 
+import com.blog.config.ApplicationConstants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +15,13 @@ import java.util.List;
 public class UserDto {
 
     private int userId ;
-    @NotBlank
-    @Size(min = 4 , message = "Username must be min of 4 characters")
+    @NotBlank // for String
+    @Size(min = 4 , message = ApplicationConstants.USER_NAME_SIZE)
     private String name ;
-    @Email(message = "Email address is not valid")
+    @Email(message = ApplicationConstants.USER_EMAIL_ERROR)
     private String email ;
     @NotBlank
-    @Size(min = 4 , max = 10 , message = "Password must be min of 4 characters and max of 10 characters")
+    @Size(min = 4 , max = 10 , message = ApplicationConstants.USER_PASSWORD_SIZE)
     private String password ;
     @NotBlank
     private String about ;

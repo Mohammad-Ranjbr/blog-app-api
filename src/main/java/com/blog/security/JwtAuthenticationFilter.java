@@ -1,5 +1,6 @@
 package com.blog.security;
 
+import com.blog.config.ApplicationConstants;
 import com.blog.entities.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -31,27 +32,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String requestToken = request.getHeader("Authorization");
+        String requestToken = request.getHeader(ApplicationConstants.AUTHORIZATION_HEADER);
         // Bearer ...
         System.out.println(requestToken);
         String username = null;
         String token = null;
 
-        if(requestToken != null && requestToken.startsWith("Bearer")){
+        if(requestToken != null && requestToken.startsWith(ApplicationConstants.JWT_TOKEN_STARTS_WITH)){
             token = requestToken.substring(7); // without Bearer
             try {
                 username = jwtTokenHelper.getUsernameFromToken(token);
             } catch (IllegalArgumentException exception){
-                System.out.println("Unable to get jwt token");
+                System.out.println(ApplicationConstants.JWT_TOKEN_ILLEGAL_ARGUMENT_EXCEPTION);
             }
             catch (ExpiredJwtException exception){
-                System.out.println("Jwt token has expired");
+                System.out.println(ApplicationConstants.JWT_TOKEN_EXPIRED_JWT_EXCEPTION);
             }
             catch (MalformedJwtException exception){
-                System.out.println("Invalid jwt token");
+                System.out.println(ApplicationConstants.JWT_TOKEN_MALFORMED_JWT_EXCEPTION);
             }
         } else {
-            System.out.println("Jwt token is null or does not begin with Bearer");
+            System.out.println(ApplicationConstants.NULL_JWT_TOKEN);
         }
 
         // Validate Token
@@ -63,10 +64,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             } else {
-                System.out.println("Invalid jwt token");
+                System.out.println(ApplicationConstants.JWT_TOKEN_FAILED_VALIDATE);
             }
         } else {
-            System.out.println("Username is null or security context is null");
+            System.out.println(ApplicationConstants.JWT_TOKEN_NULL_USERNAME_OR_CONTEXT);
         }
 
         filterChain.doFilter(request,response);

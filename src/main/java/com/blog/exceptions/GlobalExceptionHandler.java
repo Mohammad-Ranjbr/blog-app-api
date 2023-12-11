@@ -21,8 +21,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,String>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException exception){
+    public ResponseEntity<Map<String,String>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException exception,HttpStatus httpStatus){
         Map<String,String> response = new HashMap<>();
+        response.put("timestamp",String.valueOf(System.currentTimeMillis()));
+        response.put("status",String.valueOf(httpStatus.value()));
         exception.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError)error).getField();
             String message = error.getDefaultMessage();

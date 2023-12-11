@@ -1,6 +1,6 @@
 package com.blog.services.Implementation;
 
-import  com.blog.config.AppConstans;
+import com.blog.config.ApplicationConstants;
 import com.blog.entities.Role;
 import com.blog.entities.User;
 import com.blog.exceptions.ResourceNotFoundException;
@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto registerNewUser(UserDto userDto) {
+    public UserDto registerUser(UserDto userDto) {
         User user = this.userDtoToUser(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if(roleRepository.findById(AppConstans.NORMAL_USER).isPresent()){
-            role = roleRepository.findById(AppConstans.NORMAL_USER).get();
+        if(roleRepository.findById(ApplicationConstants.NORMAL_USER).isPresent()){
+            role = roleRepository.findById(ApplicationConstants.NORMAL_USER).get();
         }
         user.getRoles().add(role);
         User registeredUser = userRepository.save(user);

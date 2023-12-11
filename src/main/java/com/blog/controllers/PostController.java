@@ -1,6 +1,6 @@
 package com.blog.controllers;
 
-import com.blog.config.AppConstans;
+import com.blog.config.ApplicationConstants;
 import com.blog.payloads.ApiResponse;
 import com.blog.payloads.PostDto;
 import com.blog.payloads.PostResponse;
@@ -78,10 +78,10 @@ public class PostController {
 //        return new ResponseEntity<>(postService.getAllPosts(pageNumber,pageSize,sortBy,sortDirection),HttpStatus.OK);
 //    }
     @GetMapping("")
-    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = AppConstans.PAGE_NUMBER,required = false) int pageNumber,
-                                                    @RequestParam(value = "pageSize",defaultValue = AppConstans.PAGE_SIZE,required = false) int pageSize,
-                                                    @RequestParam(value = "sortBy",defaultValue = AppConstans.SORT_BY,required = false) String sortBy,
-                                                    @RequestParam(value = "sortDir",defaultValue = AppConstans.SORT_DIR,required = false) String sortDirection){ // sort direction
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = ApplicationConstants.PAGE_NUMBER,required = false) int pageNumber,
+                                                    @RequestParam(value = "pageSize",defaultValue = ApplicationConstants.PAGE_SIZE,required = false) int pageSize,
+                                                    @RequestParam(value = "sortBy",defaultValue = ApplicationConstants.SORT_BY,required = false) String sortBy,
+                                                    @RequestParam(value = "sortDir",defaultValue = ApplicationConstants.SORT_DIR,required = false) String sortDirection){ // sort direction
         return new ResponseEntity<>(postService.getAllPosts(pageNumber,pageSize,sortBy,sortDirection),HttpStatus.OK);
     }
     // GET - Get Post By id

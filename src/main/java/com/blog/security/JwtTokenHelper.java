@@ -1,5 +1,6 @@
 package com.blog.security;
 
+import com.blog.config.ApplicationConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,9 +11,6 @@ import java.util.Date;
 
 @Component
 public class JwtTokenHelper {
-
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-    public static final String SECRET = "jwtTokenForBlogAppApi";
 
     // Retrieve Username from Jwt Token
     public String getUsernameFromToken(String token){
@@ -33,7 +31,7 @@ public class JwtTokenHelper {
 
     // For Retrieving Any Information  From Token We Will Need The Secret Key
     private Claims getAllClaimsFromToken(String token){
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(ApplicationConstants.SECRET).parseClaimsJws(token).getBody();
     }
 
     // Check If The Token HAs Expired
@@ -48,8 +46,8 @@ public class JwtTokenHelper {
                 .builder()
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDITY*1000))
-                .signWith(SignatureAlgorithm.HS512,SECRET)
+                .setExpiration(new Date(System.currentTimeMillis()+ApplicationConstants.JWT_TOKEN_VALIDITY*1000))
+                .signWith(SignatureAlgorithm.HS512,ApplicationConstants.SECRET)
                 .compact();
     }
 

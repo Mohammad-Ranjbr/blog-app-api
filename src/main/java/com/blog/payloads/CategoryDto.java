@@ -1,5 +1,6 @@
 package com.blog.payloads;
 
+import com.blog.config.ApplicationConstants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +15,10 @@ public class CategoryDto {
 
     private int categoryId ;
     @NotBlank
-    @Size(min = 4 , max = 50 , message = "Category title must be min of 4 characters and max of 50 characters")
+    @Size(min = 4 , max = 50 , message = ApplicationConstants.CATEGORY_TITLE_SIZE)
     private String categoryTitle ;
     @NotBlank
-    @Size(min = 10 , max = 250 , message = "Category description must be min of 10 characters and max of 250 characters")
+    @Size(min = 10 , max = 250 , message = ApplicationConstants.CATEGORY_DESCRIPTION_SIZE)
     private String categoryDescription ;
 
 }
